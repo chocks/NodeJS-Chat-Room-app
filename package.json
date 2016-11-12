@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chocks/chat-room-app.git"
+    "url": "https://github.com/chocks/NodeJS-Chat-Room-app.git"
   },
   "dependencies": {
     "express": "^4.14.0",
