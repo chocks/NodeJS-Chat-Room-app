@@ -5,12 +5,27 @@
     <title>Awesome Chat Room</title>
   </head>
   <body>
-    <ul id="messages"></ul>
+     <div id="username" class="username">
+      UserName:
+      <input class="userfield" id="un" type="text" value="" ></input>
+      </div>
+      <br />
+      <ul id="messages"></ul>
     <form action="">
-      <input id="box" autocomplete="on" /><button>Send</button>
+      <input id="box" autocomplete="on" disabled="true"/>
+      <button id="send" disabled="true">Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>    <script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>   
+     <script>
+     $('#un').focus();
+     	$(".userfield").change(function(){
+	     		$('#box').attr("disabled", false);
+	     		$('#box').attr('style',  'background-color:green');
+	     		$('#box').focus();
+	     		$('#send').attr("disabled", false);
+	     		$('#un').attr("disabled", true);
+	     	});
     	var socket = io();
     	   $('form').submit(function(){
 		    socket.emit('chat message', $('#box').val());
@@ -18,7 +33,7 @@
 		    return false;
 		  });
 		  socket.on('chat message', function(msg){
-		    $('#messages').append($('<li>').text(msg));
+		    $('#messages').append($('<li>').text($('#un').val()+ " says - "+ msg));
 		  });
     </script>
   </body>

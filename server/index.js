@@ -26,6 +26,5 @@ io.on('connection', function(socket){
 });
 
 http.listen(9000, function(){
-  // console.log('listening on *:9000');
-  // console.log(path.join(__dirname, '/public'));
+	console.log('Chat server started: listening on *:9000');
 });
