@@ -1,0 +1,14 @@
+{
+  "name": "chat-room-app",
+  "version": "0.0.1",
+  "description": "A chat room app using socket.io library for nodeJS",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chocks/chat-room-app.git"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.5.1"
+  }
+}

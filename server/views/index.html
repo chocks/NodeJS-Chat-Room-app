@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/index.css" media="screen" />
+    <title>Awesome Chat Room</title>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="box" autocomplete="on" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>    <script>
+    	var socket = io();
+    	   $('form').submit(function(){
+		    socket.emit('chat message', $('#box').val());
+		    $('#box').val('');
+		    return false;
+		  });
+		  socket.on('chat message', function(msg){
+		    $('#messages').append($('<li>').text(msg));
+		  });
+    </script>
+  </body>
+</html>
