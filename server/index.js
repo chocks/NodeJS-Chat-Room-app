@@ -11,6 +11,12 @@ var app = express(); // Create express by calling the prototype in var express
 var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var fs = require('fs');
+var censorList;
+fs.readFile('../helper/censor-list.json', 'utf8', function (err, data) {
+  if (err) throw err;
+  censorList = JSON.parse(data);
+});
 
 //Load static assets
 app.use(express.static(path.join(__dirname, '/public')));
@@ -21,7 +27,18 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
 	socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+		var foundCensored = false;
+		var msgs = msg.split(" ");
+		for(i = 0; i < msgs.length; i++) {
+		    if(censorList.indexOf(msgs[i]) != -1) {
+		    	console.log(msgs[i] + " -- censored word, skipping message...");
+		    	foundCensored = true;
+		    	break;
+		    }
+	};
+	if(foundCensored == false) {
+		io.emit('chat message', msg);
+	}
   });
 });
 
