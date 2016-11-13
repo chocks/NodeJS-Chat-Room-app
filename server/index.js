@@ -6,12 +6,17 @@
  * Version: 1.0
  *
  */
-var express = require('express'); // Get the module
-var app = express(); // Create express by calling the prototype in var express
+
+var express = require('express');
+var app = express();
 var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
+var redis = require('socket.io-redis'); // redis-server needs to be running
+io.adapter(redis({ host: 'localhost', port: 6379 })); // Point to running redis-server instance
+var port = 9000; // Each node gets its own port
+
 var censorList;
 fs.readFile('../helper/censor-list.json', 'utf8', function (err, data) {
   if (err) throw err;
@@ -42,6 +47,7 @@ io.on('connection', function(socket){
   });
 });
 
-http.listen(9000, function(){
+
+http.listen(port, function(){
 	console.log('Chat server started: listening on *:9000');
 });
