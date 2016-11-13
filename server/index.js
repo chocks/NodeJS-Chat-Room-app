@@ -26,7 +26,7 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-	socket.on('chat message', function(msg){
+	socket.on('chat message', function(user, msg){
 		var foundCensored = false;
 		var msgs = msg.split(" ");
 		for(i = 0; i < msgs.length; i++) {
@@ -37,7 +37,7 @@ io.on('connection', function(socket){
 		    }
 	};
 	if(foundCensored == false) {
-		io.emit('chat message', msg);
+		io.emit('chat message', user, msg);
 	}
   });
 });
